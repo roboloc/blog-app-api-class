@@ -26,4 +26,15 @@ export class UserController {
       next(error);
     }
   };
+
+  createUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const image = files.profilePic?.[0];
+      const result = await this.userService.createUser(req.body, image);
+      res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

@@ -1,9 +1,11 @@
-import express, { Express } from "express";
 import cors from "cors";
+import express, { Express } from "express";
+import "reflect-metadata";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import { PORT } from "./config/env";
 import { SampleRouter } from "./modules/sample/sample.router";
 import { UserRouter } from "./modules/user/user.router";
+import { AuthRouter } from "./modules/auth/auth.router";
 
 export class App {
   app: Express;
@@ -26,9 +28,11 @@ export class App {
   private routes() {
     const sampleRouter = new SampleRouter();
     const userRouter = new UserRouter();
+    const authRouter = new AuthRouter();
 
     this.app.use("/samples", sampleRouter.getRouter());
     this.app.use("/users", userRouter.getRouter());
+    this.app.use("/auth", authRouter.getRouter());
   }
 
   private handleError() {
